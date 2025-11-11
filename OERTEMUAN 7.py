@@ -50,7 +50,7 @@ st.sidebar.header("Masukkan Fitur Iris:")
 # Buat slider untuk setiap fitur
 sl = st.sidebar.slider("Sepal Length (cm)", min_value=4.0, max_value=8.0, value=5.4, step=0.1)
 sw = st.sidebar.slider("Sepal Width (cm)", min_value=2.0, max_value=4.5, value=3.4, step=0.1)
-pl = st.sidebar.slider("Petal Length (cm)", min_value=1.0, max_value=7.0, value=1.3, step=0.1)
+pl = st.sidebar.slider("Petal Length (cm)", min_value=1.0, max_value=7.0, value=1.3, step=0.1) # Ini sudah diperbaiki
 pw = st.sidebar.slider("Petal Width (cm)", min_value=0.1, max_value=2.5, value=0.2, step=0.1)
 
 # Tombol Prediksi
@@ -74,7 +74,7 @@ if st.sidebar.button("Prediksi Kategori"):
         # Tampilkan hasil dalam 'metric' box
         st.metric(label="Kategori Iris", value=predicted_class_name)
         
-        # Tampilkan gambar berdasarkan hasil (URL sudah diperbaiki)
+        # Tampilkan gambar berdasarkan hasil (URL sudah diperbaiki 100%)
         if predicted_class_name == 'Iris-setosa':
             st.image("https://upload.wikimedia.org/wikipedia/commons/5/56/Iris_setosa.jpg", caption="Iris Setosa", width=300)
         elif predicted_class_name == 'Iris-versicolor':
