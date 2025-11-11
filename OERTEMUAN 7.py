@@ -86,4 +86,5 @@ if st.sidebar.button("Prediksi Kategori"):
     else:
         st.error("Model tidak dapat digunakan karena gagal dimuat.")
 else:
+
     st.info("Silakan atur nilai fitur di sidebar dan klik 'Prediksi Kategori'.")
