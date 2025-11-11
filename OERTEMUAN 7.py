@@ -3,7 +3,10 @@ import pickle
 import numpy as np
 import Orange # Diperlukan untuk memuat model .pkcls dari Orange
 
+# --- Mapping Nama Kelas ---
+# Mendefinisikan nama kelas sesuai urutan indeks (0, 1, 2)
 class_names = ['Iris-setosa', 'Iris-versicolor', 'Iris-virginica']
+
 # --- Konfigurasi Halaman ---
 st.set_page_config(
     page_title="Prediksi Iris (Orange Model)",
@@ -21,20 +24,15 @@ def load_model(model_path):
         return model
     except FileNotFoundError:
         st.error(f"Error: File model '{model_path}' tidak ditemukan.")
-        st.info("Pastikan file model Anda berada di direktori yang sama dengan `app.py` dan namanya sudah benar.")
+        st.info(f"Pastikan file model Anda ({model_path}) ada di repository GitHub.")
         return None
     except Exception as e:
         st.error(f"Terjadi error saat memuat model: {e}")
-        st.info("Pastikan Anda memiliki library 'orange3' terinstal di environment Anda.")
+        st.info("Pastikan 'orange3' ada di file requirements.txt Anda.")
         return None
 
-# --- Mapping Nama Kelas ---
-# Berdasarkan file .ows Anda, kelas target 'iris' memiliki 3 nilai:
-# 'Iris-setosa', 'Iris-versicolor', 'Iris-virginica'
-# class_names = ['Iris-setosa', 'Iris-versicolor', 'Iris-virginica']
-
 # --- Load Model ---
-# Ganti 'nama_model_anda.pkcls' dengan nama file .pkcls Anda yang sebenarnya
+# Nama file ini HARUS SAMA PERSIS dengan file .pkcls di GitHub Anda
 MODEL_FILE = 'TUGAS_TEORI_7_ZULFA.pkcls' 
 model = load_model(MODEL_FILE)
 
@@ -76,23 +74,15 @@ if st.sidebar.button("Prediksi Kategori"):
         # Tampilkan hasil dalam 'metric' box
         st.metric(label="Kategori Iris", value=predicted_class_name)
         
-        # Tampilkan gambar berdasarkan hasil (opsional, tapi bagus)
-       # Tampilkan gambar berdasarkan hasil (opsional, tapi bagus)
+        # Tampilkan gambar berdasarkan hasil (URL sudah diperbaiki)
         if predicted_class_name == 'Iris-setosa':
-            # SALAH: st.image("https.upload.wikimedia.org/...")
             st.image("https://upload.wikimedia.org/wikipedia/commons/5/56/Iris_setosa.jpg", caption="Iris Setosa", width=300)
         elif predicted_class_name == 'Iris-versicolor':
-            # SALAH: st.image("https.upload.wikimedia.org/...")
             st.image("https://upload.wikimedia.org/wikipedia/commons/4/41/Iris_versicolor_3.jpg", caption="Iris Versicolor", width=300)
         else:
-            # SALAH: st.image("https.upload.wikimedia.org/...")
             st.image("https://upload.wikimedia.org/wikipedia/commons/9/9f/Iris_virginica.jpg", caption="Iris Virginica", width=300)
 
     else:
         st.error("Model tidak dapat digunakan karena gagal dimuat.")
 else:
-
     st.info("Silakan atur nilai fitur di sidebar dan klik 'Prediksi Kategori'.")
-
-
-
