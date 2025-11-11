@@ -34,7 +34,7 @@ def load_model(model_path):
 
 # --- Load Model ---
 # Ganti 'nama_model_anda.pkcls' dengan nama file .pkcls Anda yang sebenarnya
-MODEL_FILE = 'model_iris.pkcls' 
+MODEL_FILE = 'TUGAS_TEORI_7_ZULFA.pkcls' 
 model = load_model(MODEL_FILE)
 
 # --- Antarmuka Streamlit ---
@@ -88,3 +88,4 @@ if st.sidebar.button("Prediksi Kategori"):
 else:
 
     st.info("Silakan atur nilai fitur di sidebar dan klik 'Prediksi Kategori'.")
+
