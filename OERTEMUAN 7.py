@@ -3,6 +3,7 @@ import pickle
 import numpy as np
 import Orange # Diperlukan untuk memuat model .pkcls dari Orange
 
+class_names = ['Iris-setosa', 'Iris-versicolor', 'Iris-virginica']
 # --- Konfigurasi Halaman ---
 st.set_page_config(
     page_title="Prediksi Iris (Orange Model)",
@@ -88,4 +89,5 @@ if st.sidebar.button("Prediksi Kategori"):
 else:
 
     st.info("Silakan atur nilai fitur di sidebar dan klik 'Prediksi Kategori'.")
+
 
