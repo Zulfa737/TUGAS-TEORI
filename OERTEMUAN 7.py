@@ -1,88 +1,33 @@
 import streamlit as st
 import pickle
 import numpy as np
-import Orange # Diperlukan untuk memuat model .pkcls dari Orange
 
-# --- Mapping Nama Kelas ---
-# Mendefinisikan nama kelas sesuai urutan indeks (0, 1, 2)
-class_names = ['Iris-setosa', 'Iris-versicolor', 'Iris-virginica']
+# Judul Aplikasi
+st.title("🌸 Iris Flower Classification App")
+st.write("Prediksi kategori bunga Iris berdasarkan empat fitur utama.")
 
-# --- Konfigurasi Halaman ---
-st.set_page_config(
-    page_title="Prediksi Iris (Orange Model)",
-    page_icon="🌸"
-)
+# Load Model
+with open("TUGAS_TEORI_7_ZULFA.pkcls", "rb") as file:
+    model = pickle.load(file)
 
-# --- Fungsi untuk Memuat Model ---
-# Menggunakan cache agar model tidak di-load ulang setiap kali ada interaksi
-@st.cache_resource
-def load_model(model_path):
-    """Memuat model .pkcls dari file."""
-    try:
-        with open(model_path, 'rb') as file:
-            model = pickle.load(file)
-        return model
-    except FileNotFoundError:
-        st.error(f"Error: File model '{model_path}' tidak ditemukan.")
-        st.info(f"Pastikan file model Anda ({model_path}) ada di repository GitHub.")
-        return None
-    except Exception as e:
-        st.error(f"Terjadi error saat memuat model: {e}")
-        st.info("Pastikan 'orange3' ada di file requirements.txt Anda.")
-        return None
-
-# --- Load Model ---
-# Nama file ini HARUS SAMA PERSIS dengan file .pkcls di GitHub Anda
-MODEL_FILE = 'TUGAS_TEORI_7_ZULFA.pkcls' 
-model = load_model(MODEL_FILE)
-
-# --- Antarmuka Streamlit ---
-st.title("🌸 Prediksi Kategori Bunga Iris")
-st.write(f"""
-Aplikasi ini menggunakan model **Neural Network** yang telah Anda train di Orange 
-(dari file `.ows`) untuk memprediksi kategori bunga Iris berdasarkan fiturnya.
-""")
-st.write("---")
-
-# --- Input Sidebar ---
-st.sidebar.header("Masukkan Fitur Iris:")
-
-# Buat slider untuk setiap fitur
-sl = st.sidebar.slider("Sepal Length (cm)", min_value=4.0, max_value=8.0, value=5.4, step=0.1)
-sw = st.sidebar.slider("Sepal Width (cm)", min_value=2.0, max_value=4.5, value=3.4, step=0.1)
-pl = st.sidebar.slider("Petal Length (cm)", min_value=1.0, max_value=7.0, value=1.3, step=0.1) # Ini sudah diperbaiki
-pw = st.sidebar.slider("Petal Width (cm)", min_value=0.1, max_value=2.5, value=0.2, step=0.1)
+# Input fitur dari user
+st.header("Masukkan Nilai Fitur:")
+sepal_length = st.number_input("Sepal Length (cm)", min_value=0.0, max_value=10.0, step=0.1)
+sepal_width = st.number_input("Sepal Width (cm)", min_value=0.0, max_value=10.0, step=0.1)
+petal_length = st.number_input("Petal Length (cm)", min_value=0.0, max_value=10.0, step=0.1)
+petal_width = st.number_input("Petal Width (cm)", min_value=0.0, max_value=10.0, step=0.1)
 
 # Tombol Prediksi
-if st.sidebar.button("Prediksi Kategori"):
-    if model is not None:
-        # --- Proses Prediksi ---
-        
-        # 1. Siapkan data input (harus dalam format numpy array 2D)
-        input_data = np.array([[sl, sw, pl, pw]])
-        
-        # 2. Lakukan prediksi
-        # Model Orange akan mengembalikan indeks kelas (0, 1, atau 2)
-        prediction_index = model.predict(input_data)
-        
-        # 3. Dapatkan nama kelas dari indeks
-        predicted_class_name = class_names[int(prediction_index[0])]
-        
-        # --- Tampilkan Hasil ---
-        st.subheader("Hasil Prediksi:")
-        
-        # Tampilkan hasil dalam 'metric' box
-        st.metric(label="Kategori Iris", value=predicted_class_name)
-        
-        # Tampilkan gambar berdasarkan hasil (URL sudah diperbaiki 100%)
-        if predicted_class_name == 'Iris-setosa':
-            st.image("https://upload.wikimedia.org/wikipedia/commons/5/56/Iris_setosa.jpg", caption="Iris Setosa", width=300)
-        elif predicted_class_name == 'Iris-versicolor':
-            st.image("https://upload.wikimedia.org/wikipedia/commons/4/41/Iris_versicolor_3.jpg", caption="Iris Versicolor", width=300)
-        else:
-            st.image("https://upload.wikimedia.org/wikipedia/commons/9/9f/Iris_virginica.jpg", caption="Iris Virginica", width=300)
+if st.button("🔍 Prediksi"):
+    # Buat array input
+    input_data = np.array([[sepal_length, sepal_width, petal_length, petal_width]])
 
-    else:
-        st.error("Model tidak dapat digunakan karena gagal dimuat.")
-else:
-    st.info("Silakan atur nilai fitur di sidebar dan klik 'Prediksi Kategori'.")
+    # Lakukan prediksi
+    prediction = model.predict(input_data)
+
+    # Map hasil prediksi ke nama spesies
+    iris_classes = ['Iris-setosa', 'Iris-versicolor', 'Iris-virginica']
+    result = iris_classes[int(prediction[0])]
+
+    # Tampilkan hasil
+    st.success(f"Hasil prediksi: **{result}**")
