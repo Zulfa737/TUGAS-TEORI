@@ -77,11 +77,15 @@ if st.sidebar.button("Prediksi Kategori"):
         st.metric(label="Kategori Iris", value=predicted_class_name)
         
         # Tampilkan gambar berdasarkan hasil (opsional, tapi bagus)
+       # Tampilkan gambar berdasarkan hasil (opsional, tapi bagus)
         if predicted_class_name == 'Iris-setosa':
-            st.image("https.upload.wikimedia.org/wikipedia/commons/5/56/Iris_setosa.jpg", caption="Iris Setosa", width=300)
+            # SALAH: st.image("https.upload.wikimedia.org/...")
+            st.image("https://upload.wikimedia.org/wikipedia/commons/5/56/Iris_setosa.jpg", caption="Iris Setosa", width=300)
         elif predicted_class_name == 'Iris-versicolor':
-            st.image("https.upload.wikimedia.org/wikipedia/commons/4/41/Iris_versicolor_3.jpg", caption="Iris Versicolor", width=300)
+            # SALAH: st.image("https.upload.wikimedia.org/...")
+            st.image("https://upload.wikimedia.org/wikipedia/commons/4/41/Iris_versicolor_3.jpg", caption="Iris Versicolor", width=300)
         else:
+            # SALAH: st.image("https.upload.wikimedia.org/...")
             st.image("https://upload.wikimedia.org/wikipedia/commons/9/9f/Iris_virginica.jpg", caption="Iris Virginica", width=300)
 
     else:
@@ -89,5 +93,6 @@ if st.sidebar.button("Prediksi Kategori"):
 else:
 
     st.info("Silakan atur nilai fitur di sidebar dan klik 'Prediksi Kategori'.")
+
 
 
